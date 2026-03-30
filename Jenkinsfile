@@ -1,8 +1,12 @@
 pipeline {
     agent any
 
-    stages {
+    tools {
+        gradle 'gradle'   // use Jenkins-installed Gradle
+        jdk 'JDK'         // use Jenkins JDK
+    }
 
+    stages {
         stage('Checkout') {
             steps {
                 git branch: 'master', url: 'https://github.com/prxj10/maven-to-gradle.git'
@@ -11,13 +15,13 @@ pipeline {
 
         stage('Build') {
             steps {
-                sh './gradlew build'
+                sh 'gradle build'
             }
         }
 
         stage('Test') {
             steps {
-                sh './gradlew test'
+                sh 'gradle test'
             }
         }
 
@@ -30,10 +34,10 @@ pipeline {
 
     post {
         success {
-            echo 'Gradle build successful!'
+            echo 'Build and deployment successful!'
         }
         failure {
-            echo 'Gradle build failed!'
+            echo 'Build failed!'
         }
     }
 }
