@@ -2,8 +2,8 @@ pipeline {
     agent any
 
     tools {
-        gradle 'Gradle'   // must match Jenkins config EXACTLY
-        jdk 'jdk'         // change if your config name is different
+        gradle 'Gradle'
+        jdk 'jdk'
     }
 
     stages {
@@ -27,14 +27,14 @@ pipeline {
 
         stage('Run Application') {
             steps {
-                sh 'gradle run'
+                sh 'java -jar build/libs/maven-to-gradle-1.0-SNAPSHOT.jar'
             }
         }
     }
 
     post {
         success {
-            echo 'Build and deployment successful!'
+            echo 'Build successful!'
         }
         failure {
             echo 'Build failed!'
